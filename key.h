@@ -10,7 +10,7 @@ private:
 public:
     Key(int length);
     Key(vector<int> deterministicKey);
-    vector<int> xor (vector<int>& target);
+    vector<int> xoor (vector<int>& target);
     vector<int> get();
 };
 
@@ -32,7 +32,7 @@ Key::Key(vector<int> deterministicKey)
     key = deterministicKey;
 }
 
-vector<int> Key :: xor (vector<int>& target)
+vector<int> Key :: xoor (vector<int>& target)
 {
     vector<int> result = {};
     for (int i = 0; i < target.size(); i++)

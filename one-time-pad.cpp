@@ -42,7 +42,7 @@ vector<vector<int>> encrypt(vector<vector<int>>& plaintexts, Key& key)
 	vector<vector<int>> results = {};
 	for (int i = 0; i < plaintexts.size(); i++) {
 		vector<int> plaintext = plaintexts[i];
-		vector<int> ciphertext = key. xor (plaintext);
+		vector<int> ciphertext = key. xoor (plaintext);
 		results.push_back(ciphertext);
 	}
 	return results;
@@ -53,7 +53,7 @@ vector<vector<int>> decrypt(vector<vector<int>>& ciphertexts, Key& key)
 	vector<vector<int>> results = {};
 	for (int i = 0; i < ciphertexts.size(); i++) {
 		vector<int> ciphertext = ciphertexts[i];
-		vector<int> plaintext = key. xor (ciphertext);
+		vector<int> plaintext = key. xoor (ciphertext);
 		results.push_back(plaintext);
 	}
 	return results;
