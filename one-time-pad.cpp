@@ -37,20 +37,45 @@ string vecToString(vector<int>& str)
 	return s;
 }
 
-void encrypt(vector<string> &plaintexts, Key &key)
+vector<vector<int>> encrypt(vector<vector<int>>& plaintexts, Key& key)
 {
+	vector<vector<int>> results = {};
 	for (int i = 0; i < plaintexts.size(); i++) {
-		string plaintext = plaintexts[i];
-		vector<int> ciphertext = key. xor (strToVec(plaintext));
-		vector<int> decryptedPlaintext = key. xor (ciphertext);
-		cout << i << ": " << plaintext << " --> " << vecToString(ciphertext) << " --> " << vecToString(decryptedPlaintext) << endl;
+		vector<int> plaintext = plaintexts[i];
+		vector<int> ciphertext = key. xor (plaintext);
+		results.push_back(ciphertext);
 	}
+	return results;
+}
+
+vector<vector<int>> decrypt(vector<vector<int>>& ciphertexts, Key& key)
+{
+	vector<vector<int>> results = {};
+	for (int i = 0; i < ciphertexts.size(); i++) {
+		vector<int> ciphertext = ciphertexts[i];
+		vector<int> plaintext = key. xor (ciphertext);
+		results.push_back(plaintext);
+	}
+	return results;
 }
 
 int main()
 {
 	vector<string> plaintexts{ "Blue", "Red", "Orange" };
+	vector<vector<int>> plaintextsInt = {};
+	for (string plaintext : plaintexts) {
+		plaintextsInt.push_back(strToVec(plaintext));
+	}
+
 	int keyLen = calculateKeyLength(plaintexts);
 	Key key = Key(keyLen);
-	encrypt(plaintexts, key);
+	vector<vector<int>> ciphertexts = encrypt(plaintextsInt, key);
+	vector<vector<int>> decryptedPlaintexts = decrypt(ciphertexts, key);
+
+	for (int i = 0; i < plaintexts.size(); i++) {
+		string plaintext = plaintexts[i];
+		string ciphertext = vecToString(ciphertexts[i]);
+		string decryptedPlaintext = vecToString(decryptedPlaintexts[i]);
+		cout << i << ": " << plaintext << " --> " << ciphertext << " --> " << decryptedPlaintext << endl;
+	}
 }
