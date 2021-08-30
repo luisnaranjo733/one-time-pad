@@ -2,11 +2,7 @@
 //
 
 #include "one-time-pad.h"
-
-#include <vector>
-#include <array>
-#include <random>
-#include <iostream>
+#include "key.h"
 
 using namespace std;
 
@@ -17,19 +13,28 @@ int calculateKeyLength(vector<string> &plaintexts)
 		if (plaintext.length() > keyLen) {
 			keyLen = plaintext.length();
 		}
-		cout << plaintext << endl;
 	}
 
 	return keyLen;
 }
 
-vector<int> generateKey(int keyLen, uniform_int_distribution<mt19937::result_type> &dist, mt19937 &rng)
+vector<int> strToVec(string& str)
 {
-	vector<int> key{ };
-	for (int i = 0; i < keyLen; i++) {
-		key.push_back(dist(rng));
+	vector<int> result = {};
+	for (char const& c : str) {
+		result.push_back(c);
 	}
-	return key;
+	return result;
+}
+
+string vecToString(vector<int> &str)
+{
+	vector<char> result;
+	for (char c : str) {
+		result.push_back(c);
+	}
+	string s(result.begin(), result.end());
+	return s;
 }
 
 int main()
@@ -38,16 +43,12 @@ int main()
 
 	int keyLen = calculateKeyLength(plaintexts);
 
-	// Seed randomness
-	random_device dev;
-	mt19937 rng(dev());
-	uniform_int_distribution<mt19937::result_type> distAscii(0, 127); // distribution in range of ascii values
+	Key key = Key(keyLen);
 
-	// Generate key
-	vector<int> key = generateKey(keyLen, distAscii, rng);
-
-	for (int c : key) {
-		cout << c << endl;
+	for (string plaintext : plaintexts) {
+		vector<int> ciphertext = key. xor (strToVec(plaintext));
+		vector<int> decryptedPlaintext = key. xor (ciphertext);
+		cout << vecToString(decryptedPlaintext) << endl;
 	}
 
 	return 0;

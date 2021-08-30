@@ -6,6 +6,6 @@ cmake_minimum_required (VERSION 3.8)
 project ("one-time-pad")
 
 # Add source to this project's executable.
-add_executable (one-time-pad "one-time-pad.cpp" "one-time-pad.h")
+add_executable (one-time-pad "one-time-pad.cpp" "one-time-pad.h"  "key.h" )
 
 # TODO: Add tests and install targets if needed.
